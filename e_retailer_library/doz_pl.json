@@ -1,0 +1,1939 @@
+{
+  "info": {
+    "name": "doz.pl",
+    "domain": "https://www.doz.pl",
+    "country": null,
+    "product_card_examples": [],
+    "listing_examples": [],
+    "warnings": []
+  },
+  "options": {
+    "fetch_all": [
+      [
+        {
+          "function": "find_element_by_css",
+          "kwargs": {
+            "css": "div[class$=searchresults-footer] a"
+          }
+        },
+        {
+          "function": "cookies",
+          "kwargs": {
+            "css": "#sp-cc-accept",
+            "return_true": 1
+          }
+        },
+        {
+          "function": "find_element_by_css",
+          "kwargs": {
+            "css": "div[class$=searchresults-footer] a"
+          }
+        },
+        {
+          "function": "find_my_element",
+          "kwargs": {
+          }
+        },
+        {
+          "function": "click_wait",
+          "kwargs": {
+            "seconds": 2
+          }
+        }
+      ]
+    ],
+    "on_enter": [
+      {
+        "function": "wait",
+        "kwargs": {
+          "seconds": 4
+        },
+        "required": 1
+      },
+      {
+        "function": "wait_for_appear",
+        "kwargs": {
+          "css": ".validateCaptcha"
+        },
+        "required": 0
+      },
+      {
+        "function": "wait_for_appear",
+        "kwargs": {
+          "css": "#captchacharacters"
+        },
+        "required": 0
+      },
+      {
+        "function": "click_by_css",
+        "kwargs": {
+          "css": "#sp-cc-accept"
+        },
+        "required": 0
+      }
+    ]
+  },
+  "product_card": {
+    "title": {
+      "name": "title",
+      "functions": [
+        [
+          {
+            "function": "find_element_by_css",
+            "kwargs": {
+              "css": "h1.product__title::text"
+            }
+          },
+          {
+            "function": "strip",
+            "kwargs": {}
+          }
+        ]
+      ],
+      "tags": [
+        "C",
+        "text",
+        "long"
+      ]
+    },
+    "description": {
+      "name": "description",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "section.product-card__about h2 p::text"
+            }
+          },
+          {
+            "function": "get_scrapy",
+            "kwargs": {},
+            "map": 1
+          },
+          {
+            "function": "strip",
+            "kwargs": {},
+            "map": 1
+          },
+          {
+            "function": "join",
+            "kwargs": {
+              "delimiter": " "
+            }
+          }
+        ]
+      ],
+      "tags": [
+        "C",
+        "text",
+        "long"
+      ]
+    },
+    "flag": {
+      "name": "flag",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div#productDescription>:not(.disclaim)"
+            }
+          },
+          {
+            "function": "get_scrapy",
+            "kwargs": {},
+            "map": 1
+          },
+          {
+            "function": "join",
+            "kwargs": {
+              "delimiter": " "
+            }
+          }
+        ]
+      ],
+      "tags": [
+        "C",
+        "text",
+        "long"
+      ]
+    },
+    "price": {
+      "name": "price",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div.price::text"
+            }
+          },
+          {
+            "function": "strip",
+            "kwargs": {}
+          }
+        ]
+      ],
+      "tags": [
+        "P",
+        "float"
+      ]
+    },
+    "availability": {
+      "name": "availability",
+      "functions": [
+        [
+          {
+            "function": "find_element_by_css",
+            "kwargs": {
+              "css": ""
+            }
+          },
+          {
+            "function": "strip",
+            "kwargs": {}
+          }
+        ]
+      ],
+      "tags": [
+        "P",
+        "float"
+      ]
+    }
+  },
+  "listing": [
+    {
+      "cookies": [
+        {
+            "function": "find_element_by_css",
+            "kwargs": {
+              "css": "li.a-last a"
+            }
+          },
+        {
+            "function": "click",
+            "kwargs": {}
+          }
+      ],
+      "expanding": 0,
+      "containers": [
+        {
+          "name": "product_homepage_first_row",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "section.section.wrapper.product-slider.product-slider--clasic div.product__list-item.product.product--higher"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.subtitle.subtitle--small a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "title"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class$=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": ""
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "data-src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_homepage_recommended_products",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#swiper-recomended li"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class$=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "svg"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "data-tippy-content"},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_homepage_placement_slider",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#js-swiper-custom li"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class$=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "svg"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "data-tippy-content"},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_homepage_newest",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#js-swiper-newest li.product__list-item.product.swiper-slide.swiper-slide-visible"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class$=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "svg"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "data-tippy-content"},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_homepage_last_watched",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#js-swiper-last-watched li"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class$=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "svg"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "data-tippy-content"},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "products_search_page",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#product-list li"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class*=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "svg"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "data-tippy-content"},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "products_category_page",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#product-list li"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "/p", "separator2":  "-"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_element_by_css",
+                    "kwargs": {
+                      "css": "a[class*=price]::text"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "svg"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "data-tippy-content"},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        }
+      ],
+      "banners": [
+        {
+          "name": "head banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": ".slideshow__list-item"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "middle panel",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": ".product__list-item.product.product--higher"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.product__image img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "brands panel",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#js-swiper-brand li"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "dropdown-menu banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "ul li div.submenu div.submenu__sidebar"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a[data-gtm-event]"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a[data-gtm-event] img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "under banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "section.section.wrapper.adoceans"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "'mostly-choosen-brands' section",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": ".brands .brands__list .brands__list-item"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "'mostly-choosen-brands' section",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": ".brands .brands__list .brands__list-item"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        }
+      ],
+      "pagination": [
+        [
+          {
+            "function": "find_element_by_css",
+            "kwargs": {
+              "css": ".s-pagination-item.s-pagination-next.s-pagination-button.s-pagination-separator"
+            }
+          },
+          {
+            "function": "find_my_element",
+            "kwargs": {
+            }
+          },
+          {
+            "function": "get_attribute",
+            "kwargs": {"attribute":  "href"}
+          },
+          {
+            "function": "go_to_url",
+            "kwargs": {
+
+            }
+          },
+          {
+            "function": "wait",
+            "kwargs": {
+              "seconds": 2
+            }
+          }
+        ],
+        [
+          {
+            "function": "find_element_by_css",
+            "kwargs": {
+              "css": "li.a-last a"
+            }
+          },
+          {
+            "function": "find_my_element",
+            "kwargs": {
+            }
+          },
+          {
+            "function": "get_attribute",
+            "kwargs": {"attribute":  "href"}
+          },
+          {
+            "function": "go_to_url",
+            "kwargs": {
+
+            }
+          },
+          {
+            "function": "wait",
+            "kwargs": {
+              "seconds": 2
+            }
+          }
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+def functions():
+    return dict()

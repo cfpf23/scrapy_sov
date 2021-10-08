@@ -1,0 +1,3471 @@
+{
+  "info": {
+    "name": "apteka-melissa.pl",
+    "domain": "https://www.apteka-melissa.pl",
+    "country": null,
+    "product_card_examples": [],
+    "listing_examples": [],
+    "warnings": []
+  },
+  "options": {
+    "fetch_all": [
+      [
+        {
+          "function": "find_elements_by_css",
+          "kwargs": {
+            "css": "div[class$=searchresults-footer] a"
+          }
+        },
+        {
+          "function": "cookies",
+          "kwargs": {
+            "css": "#sp-cc-accept",
+            "return_true": 1
+          }
+        },
+        {
+          "function": "find_elements_by_css",
+          "kwargs": {
+            "css": "div[class$=searchresults-footer] a"
+          }
+        },
+        {
+          "function": "find_my_element",
+          "kwargs": {
+          }
+        },
+        {
+          "function": "click_wait",
+          "kwargs": {
+            "seconds": 2
+          }
+        }
+      ]
+    ],
+    "on_enter": [
+      {
+        "function": "wait",
+        "kwargs": {
+          "seconds": 4
+        },
+        "required": 1
+      },
+      {
+        "function": "wait_for_appear",
+        "kwargs": {
+          "css": ".validateCaptcha"
+        },
+        "required": 0
+      },
+      {
+        "function": "wait_for_appear",
+        "kwargs": {
+          "css": "#captchacharacters"
+        },
+        "required": 0
+      },
+      {
+        "function": "click_by_css",
+        "kwargs": {
+          "css": "#sp-cc-accept"
+        },
+        "required": 0
+      }
+    ]
+  },
+  "product_card": {
+    "title": {
+      "name": "title",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div.content-app:nth-child(1) h1::text"
+            }
+          },
+          {
+            "function": "strip",
+            "kwargs": {}
+          }
+        ]
+      ],
+      "tags": [
+        "C",
+        "text",
+        "long"
+      ]
+    },
+    "description": {
+      "name": "description",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div.content-app:nth-child(1) div[itemprop=description] p::text"
+            }
+          },
+          {
+            "function": "get_scrapy",
+            "kwargs": {},
+            "map": 1
+          },
+          {
+            "function": "strip",
+            "kwargs": {},
+            "map": 1
+          },
+          {
+            "function": "join",
+            "kwargs": {
+              "delimiter": " "
+            }
+          }
+        ]
+      ],
+      "tags": [
+        "C",
+        "text",
+        "long"
+      ]
+    },
+    "flag": {
+      "name": "flag",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div#productDescription>:not(.disclaim)"
+            }
+          },
+          {
+            "function": "get_scrapy",
+            "kwargs": {},
+            "map": 1
+          },
+          {
+            "function": "join",
+            "kwargs": {
+              "delimiter": " "
+            }
+          }
+        ]
+      ],
+      "tags": [
+        "C",
+        "text",
+        "long"
+      ]
+    },
+    "price": {
+      "name": "price",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div.content-app:nth-child(1) h2.cena_pro::text"
+            }
+          },
+          {
+            "function": "getall",
+            "kwargs": {}
+          },
+          {
+            "function": "join",
+            "kwargs": {"delimiter":  ""}
+          }
+        ]
+      ],
+      "tags": [
+        "P",
+        "float"
+      ]
+    },
+    "availability": {
+      "name": "availability",
+      "functions": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "div.content-app:nth-child(1) .available::text"
+            }
+          },
+          {
+            "function": "strip",
+            "kwargs": {}
+          }
+        ]
+      ],
+      "tags": [
+        "P",
+        "float"
+      ]
+    }
+  },
+  "listing": [
+    {
+      "cookies": [
+        {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "li.a-last a"
+            }
+          },
+        {
+            "function": "click",
+            "kwargs": {}
+          }
+      ],
+      "expanding": 0,
+      "containers": [
+        {
+          "name": "product_main_product_page",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div.content-app:nth-child(1)"
+              }
+            }
+          ],
+          "fields": {
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h1"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a::attr(href)"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2[class*=cena_pro]:first-child::attr(innerText)"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "clean_float",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "badge",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_week_brand_first",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-promocje div[class*=tblprodukt]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "data-src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+
+          }
+        },
+        {
+          "name": "product_week_brand_second",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-promocje div[class*=tblprodukt]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "data-src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+
+          }
+        },
+        {
+          "name": "product_week_expiration_date",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-okazje div[class*=tblprodukt]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "data-src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+
+          }
+        },
+        {
+          "name": "product_recommended",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-polecane div[class*=tblprodukt]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "data-src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+
+          }
+        },
+        {
+          "name": "product_newest",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-nowosci div[class*=tblprodukt]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "alt"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "description": {
+              "name": "description",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "p::text'"
+                    }
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "image": {
+              "name": "image",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {
+                      "attribute": "data-src"
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+
+          }
+        },
+        {
+          "name": "product_expiration_date_search_page",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-okazje div[class^=mdl-cell]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.napis_produkt::text"
+                    }
+                  },
+                  {
+                    "function": "getall",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter":  " "}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "getall",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter": ""}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_recommended_search_page",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-polecane div[class^=mdl-cell]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.napis_produkt::text"
+                    }
+                  },
+                  {
+                    "function": "getall",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter":  " "}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "getall",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter": ""}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_normal_result_search_page",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div.prefixbox-product-container"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {},
+                    "map": 1
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.prefixbox-product-price::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_expiration_date_category_page",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-okazje div[class^=mdl-cell]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.napis_produkt::text"
+                    }
+                  },
+                  {
+                    "function": "getall",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter":  " "}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "h2::text"
+                    }
+                  },
+                  {
+                    "function": "getall",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter": ""}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_recommended_category_page",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#owl-polecane div[class^=mdl-cell]"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {},
+                    "map": 1
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.prefixbox-product-price::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        },
+        {
+          "name": "product_normal_result_category_page",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div.prefixbox-product-container"
+              }
+            }
+          ],
+          "fields": {
+            "sku": {
+              "name": "sku",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  },
+                  {
+                    "function": "extract_stuff_between_diffs",
+                    "kwargs": {"separator1":  "\\,", "separator2":  "\\."}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {"css":  "div.napis_produkt"}
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "id"}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "title": {
+              "name": "title",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  },
+                  {
+                    "function": "strip",
+                    "kwargs": {},
+                    "map": 1
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "product_link": {
+              "name": "product_link",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "price": {
+              "name": "price",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div.prefixbox-product-price::text"
+                    }
+                  },
+                  {
+                    "function": "get_scrapy",
+                    "kwargs": {}
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            },
+            "flag": {
+              "name": "flag",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "span.a-badge-text"
+                    }
+                  },
+                  {
+                    "function": "get_text",
+                    "kwargs": {},
+                    "map": 1
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {
+                      "delimiter": ", "
+                    }
+                  }
+                ]
+              ],
+              "tags": [
+                "P",
+                "float"
+              ]
+            }
+          }
+        }
+      ],
+      "banners": [
+        {
+          "name": "head banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div.swiper-slide"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a[onclick*=onPromo]"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a[onclick*=onPromo] img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "top panel",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": ".kafle_container"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a[onclick*=onPromo]"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a[onclick*=onPromo] img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "first week brand banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css_interval",
+              "kwargs": {
+                "css": "div[class=owl-item]",
+                "start": "0",
+                "end": "1"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div div img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "second week brand banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css_interval",
+              "kwargs": {
+                "css": "div[class=owl-item]",
+                "start": "0",
+                "end": "1"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "div div img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ],
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a.a-link-normal.s-no-outline"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "bottom banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#baner_footer"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "sides banner new",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div[class=background-advertisement]"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "picture img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "left-side banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div[class *= 'boczna-reklama-lewa']"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "right-side banner",
+          "page_type": "homepage",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div[class *= 'boczna-reklama-prawa']"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "head banner",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.kontener > div > div:nth-child(1)"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "under head banner",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.kontener > div > div:nth-child(1) > div.CategoryHeaderContainer > div.firma-baner"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "bottom banner",
+          "page_type": "search_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#baner_footer"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "head banner",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.kontener > div.mdl-grid > div:nth-child(1)"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "under head banner",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.kontener > div > div:nth-child(1) > div.CategoryHeaderContainer > div.firma-baner"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "bottom banner",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#baner_footer"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "left-side banner",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.firma-lewa"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "get_attribute_origin",
+                    "kwargs": {"attribute":  "style"}
+                  },
+                  {
+                    "function": "extract_stuff_between",
+                    "kwargs": {"separator":  "'"}
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter":  ""}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "right-side banner",
+          "page_type": "category_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.firma-prawa"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "get_attribute_origin",
+                    "kwargs": {"attribute":  "style"}
+                  },
+                  {
+                    "function": "extract_stuff_between",
+                    "kwargs": {"separator":  "'"}
+                  },
+                  {
+                    "function": "join",
+                    "kwargs": {"delimiter":  ""}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "head banner",
+          "page_type": "product_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.kontener > div > div:nth-child(1)"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "under head banner",
+          "page_type": "product_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "#body_all > main > div.content-app.content-app-navy > div:nth-child(1) > div.kontener > div > div:nth-child(1) > div.CategoryHeaderContainer > div.firma-baner"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        },
+        {
+          "name": "bottom banner",
+          "page_type": "product_page",
+          "locate": [
+            {
+              "function": "find_elements_by_css",
+              "kwargs": {
+                "css": "div#baner_footer"
+              }
+            }
+          ],
+          "fields": {
+            "redirect_selector": {
+              "name": "redirect_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "href"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            },
+            "source_selector": {
+              "name": "source_selector",
+              "functions": [
+                [
+                  {
+                    "function": "find_elements_by_css",
+                    "kwargs": {
+                      "css": "a img"
+                    }
+                  },
+                  {
+                    "function": "get_attribute",
+                    "kwargs": {"attribute":  "src"}
+                  }
+                ]
+              ],
+              "tags": [
+                "C",
+                "text",
+                "long"
+              ]
+            }
+          }
+        }
+      ],
+      "pagination": [
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": ".s-pagination-item.s-pagination-next.s-pagination-button.s-pagination-separator"
+            }
+          },
+          {
+            "function": "find_my_element",
+            "kwargs": {
+            }
+          },
+          {
+            "function": "get_attribute",
+            "kwargs": {"attribute":  "href"}
+          },
+          {
+            "function": "go_to_url",
+            "kwargs": {
+
+            }
+          },
+          {
+            "function": "wait",
+            "kwargs": {
+              "seconds": 2
+            }
+          }
+        ],
+        [
+          {
+            "function": "find_elements_by_css",
+            "kwargs": {
+              "css": "li.a-last a"
+            }
+          },
+          {
+            "function": "find_my_element",
+            "kwargs": {
+            }
+          },
+          {
+            "function": "get_attribute",
+            "kwargs": {"attribute":  "href"}
+          },
+          {
+            "function": "go_to_url",
+            "kwargs": {
+
+            }
+          },
+          {
+            "function": "wait",
+            "kwargs": {
+              "seconds": 2
+            }
+          }
+        ]
+      ]
+    }
+  ]
+}
